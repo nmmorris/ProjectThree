@@ -84,6 +84,7 @@ var variableCounter = 0;
   var supportCampaignButton;
   var supportCampaignButtonWhite;
 
+// Load in images and adventure manager files
 function preload() {
   adventureManager = new AdventureManager("data/adventureStates.csv", 
     "data/interactionTable.csv", "data/clickableLayout.csv");
@@ -126,6 +127,7 @@ function preload() {
 function setup() {
   createCanvas(1280, 720);
 
+  // Setup adventure manager and buttons
   adventureManager.setup();
   setupButtons();
 
@@ -133,36 +135,37 @@ function setup() {
   button1.image = beginButton;
   button1.width = beginButton.width;
   button1.height = beginButton.height;
-
   button1.locate(1050 - beginButton.width/2, 650 - beginButton.height/2);
 
   option2.image = overCounterButton;
   option2.width = overCounterButton.width;
   option2.height = overCounterButton.height;
-
   option2.locate(320 - option2.width/2, 650 - option2.height/2);
 
-  // Animated spinny circle
+  // Use cirlce png for spinny animated circle
   spinny = createSprite(1065, 75);
   spinny.addImage(spinnyImage);
 }
 
 function draw() {
+  // Draw first state from adventure manager
   adventureManager.draw();
 
+  // First button is always at bottom right
   button1.draw();
 
+  // Movement for spinny circle
   direction += 2;
-
   spinny.setSpeed(3, direction);
 
+  // Spinny circle doesn't appear on home screen
   if (!state1Active) {
     drawSprites();
   }
 }
 
 function setupButtons() {
-  // Make buttons for continue and two options
+  // Make buttons for continue and two options, assign them their functions
   button1 = new Clickable();
   option1 = new Clickable();
   option2 = new Clickable();
@@ -177,6 +180,8 @@ function setupButtons() {
 }
 
 button1Pressed = function() {
+  // Button performs a different function on click depending on what state is active
+  // Second option only appears in certain scenario decision states
   if (state1Active) {
     // Move to next state
     adventureManager.changeState('Premise', null);
@@ -189,6 +194,7 @@ button1Pressed = function() {
   }
 
   if (state2Active) {
+    // Move to next state
     adventureManager.changeState('Players', null);
 
     // Trigger next button
@@ -199,6 +205,7 @@ button1Pressed = function() {
   }
 
   if (state3Active) {
+    // Player descriptions are prompted using a counter on each click of button
     playerCounter += 1;
     if (playerCounter === 3) {
       button1.image = continueButton;
@@ -207,6 +214,7 @@ button1Pressed = function() {
       button1.locate(915 - beginButton.width/2, 650 - beginButton.height/2);
     }
     if (playerCounter === 4) {
+      // Move to next state
       adventureManager.changeState('State4', null);
       // Trigger next button
       button1.image = variableButton;
@@ -217,6 +225,7 @@ button1Pressed = function() {
   }
 
   if (state4Active) {
+    // Variable descriptions are prompted using a counter on each click of button
     variableCounter += 1;
     if (variableCounter === 2) {
       button1.image = continueButton;
@@ -225,8 +234,9 @@ button1Pressed = function() {
       button1.locate(915 - beginButton.width/2, 650 - beginButton.height/2);
     }
     if (variableCounter === 3) {
-      // Trigger next button
+      // Move to next state
       adventureManager.changeState('State5', null);
+      // Trigger next button
       button1.image = subscriptionButton;
       button1.width = subscriptionButton.width;
       button1.height = subscriptionButton.height;
@@ -240,7 +250,9 @@ button1Pressed = function() {
   }
 
   if (state5Active) {
+    // Move to next state
     adventureManager.changeState('State7', null);
+    // Trigger next button
     button1.image = continueButton;
     button1.width = continueButton.width;
     button1.height = continueButton.height;
@@ -248,7 +260,9 @@ button1Pressed = function() {
   }
 
   if (state6Active) {
+    // Move to next state
     adventureManager.changeState('State8', null);
+    // Trigger next button
     button1.image = continueProductionButton;
     button1.width = continueProductionButton.width;
     button1.height = continueProductionButton.height;
@@ -261,7 +275,9 @@ button1Pressed = function() {
 }
 
   if (state8Active) {
+    // Move to next state
     adventureManager.changeState('State10', null);
+    // Trigger next button
     button1.image = continueButton;
     button1.width = continueButton.width;
     button1.height = continueButton.height;
@@ -269,14 +285,18 @@ button1Pressed = function() {
   }
 
   if (state9Active) {
+    // Move to ending state
     adventureManager.changeState('State11', null);
+    // Deactivate buttons
     button1.image = null;
     button1.width = null;
     button1.height = null;
   }
 
   if (state10Active) {
+    // Move to next state
     adventureManager.changeState('State12', null);
+    // Trigger next button
     button1.image = supportCampaignButton;
     button1.width = supportCampaignButton.width;
     button1.height = supportCampaignButton.height;
@@ -289,14 +309,18 @@ button1Pressed = function() {
   }
 
   if (state12Active) {
+    // Move to ending state
     adventureManager.changeState('State14', null);
+    // Deactivate buttons
     button1.image = null;
     button1.width = null;
     button1.height = null;
   }
 
   if (state7Active) {
+    // Move to next state
     adventureManager.changeState('State15', null);
+    // Trigger next button
     button1.image = plansSameButton;
     button1.width = plansSameButton.width;
     button1.height = plansSameButton.height;
@@ -309,7 +333,9 @@ button1Pressed = function() {
   }
 
   if (state15Active) {
+    // Move to ending state
     adventureManager.changeState('State17', null);
+    // Deactivate buttons
     button1.image = null;
     button1.width = null;
     button1.height = null;
@@ -317,6 +343,7 @@ button1Pressed = function() {
 }
 
 button1Hover = function() {
+  // For each respective button option, allow them to turn white on hover
   if (button1.image === beginButton) {
     button1.image = beginButtonWhite;
   }
@@ -351,6 +378,7 @@ button1Hover = function() {
 }
 
 button1Outside = function() {
+  // Button turns back to black when not hovering
   if (button1.image === beginButton) {
     button1.image = beginButton;
   }
@@ -409,8 +437,12 @@ button1Outside = function() {
 }
 
 option2Pressed = function() {
+  // Button performs a different function on click depending on what state is active
+  // Second option only appears in certain scenario decision states
   if (state5Active) {
+    // Move to next state
     adventureManager.changeState('State6', null);
+    // Trigger the main button
     button1.image = continueButton;
     button1.width = continueButton.width;
     button1.height = continueButton.height;
@@ -418,7 +450,9 @@ option2Pressed = function() {
   }
 
   if (state8Active) {
+    // Move to next state
     adventureManager.changeState('State9', null);
+    // Trigger the main button
     button1.image = continueButton;
     button1.width = continueButton.width;
     button1.height = continueButton.height;
@@ -426,14 +460,18 @@ option2Pressed = function() {
   }
 
   if (state12Active) {
+    // Move to ending state
     adventureManager.changeState('State13', null);
+    // Deactivate buttons
     button1.image = null;
     button1.width = null;
     button1.height = null;
   }
 
   if (state15Active) {
+    // Move to ending state
     adventureManager.changeState('State16', null);
+    // Deactivate buttons
     button1.image = null;
     button1.width = null;
     button1.height = null;
@@ -441,6 +479,7 @@ option2Pressed = function() {
 }
 
 option2Hover = function() {
+  // For each respective button option, allow them to turn white on hover
   if (option2.image === overCounterButton) {
     option2.image = overCounterButtonWhite;
   }
@@ -459,6 +498,7 @@ option2Hover = function() {
 }
 
 option2Outside = function() {
+  // Button turns back to black when not hovering
   if (option2.image === overCounterButton) {
     option2.image = overCounterButton;
   }
@@ -488,6 +528,8 @@ option2Outside = function() {
   }
 }
 
+// Each room class activates the boolean to tell the program what room is activate
+// At the same time it deactivates the boolean for the previous room
 class PremiseRoom extends PNGRoom {
   draw() {
     super.draw();
@@ -502,6 +544,7 @@ class PlayersRoom extends PNGRoom {
       state2Active = false;
       state3Active = true;
 
+      // Counter controls when player descriptions are shown
       if (playerCounter >= 1) {
         image(playerChart, 47, 195)
       }
@@ -524,6 +567,7 @@ class State4Room extends PNGRoom {
       state3Active = false;
       state4Active = true;
 
+      // Counter controls when variable descriptions are shown
       if (variableCounter >= 1) {
         image(variableChart, 403, 195)
       }
@@ -545,6 +589,7 @@ class State5Room extends PNGRoom {
     state4Active = false;
     state5Active = true;
 
+    // This is a scenario decision room, so we draw the second option
     option2.draw();
   }
 }
@@ -552,102 +597,105 @@ class State5Room extends PNGRoom {
 class State6Room extends PNGRoom {
   draw() {
     super.draw();
-      state5Active = false;
-      state6Active = true;
+    state5Active = false;
+    state6Active = true;
   }
 }
 
 class State7Room extends PNGRoom {
   draw() {
     super.draw();
-      state6Active = false;
-      state7Active = true;
+    state6Active = false;
+    state7Active = true;
   }
 }
 
 class State8Room extends PNGRoom {
   draw() {
     super.draw();
-      state7Active = false;
-      state8Active = true;
+    state7Active = false;
+    state8Active = true;
 
-      option2.draw();
+    // This is a scenario decision room, so we draw the second option
+    option2.draw();
   }
 }
 
 class State9Room extends PNGRoom {
   draw() {
     super.draw();
-      state8Active = false;
-      state9Active = true;
+    state8Active = false;
+    state9Active = true;
   }
 }
 
 class State10Room extends PNGRoom {
   draw() {
     super.draw();
-      state9Active = false;
-      state10Active = true;
+    state9Active = false;
+    state10Active = true;
   }
 }
 
 class State11Room extends PNGRoom {
   draw() {
     super.draw();
-      state10Active = false;
-      state11Active = true;
+    state10Active = false;
+    state11Active = true;
   }
 }
 
 class State12Room extends PNGRoom {
   draw() {
     super.draw();
-      state11Active = false;
-      state12Active = true;
+    state11Active = false;
+    state12Active = true;
 
-      option2.draw();
+    // This is a scenario decision room, so we draw the second option
+    option2.draw();
   }
 }
 
 class State13Room extends PNGRoom {
   draw() {
     super.draw();
-      state12Active = false;
-      state13Active = true;
+    state12Active = false;
+    state13Active = true;
   }
 }
 
 class State14Room extends PNGRoom {
   draw() {
     super.draw();
-      state13Active = false;
-      state14Active = true;
+    state13Active = false;
+    state14Active = true;
   }
 }
 
 class State15Room extends PNGRoom {
   draw() {
     super.draw();
-      state14Active = false;
-      state6Active = false;
-      state15Active = true;
+    state14Active = false;
+    state6Active = false;
+    state15Active = true;
 
-      option2.draw();
+    // This is a scenario decision room, so we draw the second option
+    option2.draw();
   }
 }
 
 class State16Room extends PNGRoom {
   draw() {
     super.draw();
-      state15Active = false;
-      state16Active = true;
+    state15Active = false;
+    state16Active = true;
   }
 }
 
 class State17Room extends PNGRoom {
   draw() {
     super.draw();
-      state16Active = false;
-      state17Active = true;
+    state16Active = false;
+    state17Active = true;
   }
 }
