@@ -15,6 +15,7 @@
 // Variables
 var backgroundImage;
 var adventureManager;
+var secondPlay = false;
 var state1Active = true;
 var state2Active = false;
 var state3Active = false;
@@ -122,6 +123,8 @@ function preload() {
   studentPlanButton = loadImage('assets/offerstudentplan.png');
   studentPlanButtonWhite = loadImage('assets/offerstudentplanwhite.png');
   spinnyImage = loadImage('assets/mouse.png')
+  playAgainButton = loadImage('assets/playbutton.png');
+  playAgainButtonWhite = loadImage('assets/playagainwhite.png');
 }
 
 function setup() {
@@ -143,7 +146,7 @@ function setup() {
   option2.locate(320 - option2.width/2, 650 - option2.height/2);
 
   // Use cirlce png for spinny animated circle
-  spinny = createSprite(1065, 75);
+  spinny = createSprite(800, 200);
   spinny.addImage(spinnyImage);
 }
 
@@ -155,11 +158,11 @@ function draw() {
   button1.draw();
 
   // Movement for spinny circle
-  direction += 2;
+  direction += 0.8;
   spinny.setSpeed(3, direction);
 
   // Spinny circle doesn't appear on home screen
-  if (!state1Active) {
+  if (state1Active) {
     drawSprites();
   }
 }
@@ -287,10 +290,11 @@ button1Pressed = function() {
   if (state9Active) {
     // Move to ending state
     adventureManager.changeState('State11', null);
-    // Deactivate buttons
-    button1.image = null;
-    button1.width = null;
-    button1.height = null;
+    // Play again button takes you back to the first scenario
+    button1.image = playAgainButton;
+    button1.width = playAgainButton.width;
+    button1.height = playAgainButton.height;
+    button1.locate(985 - playAgainButton.width/2, 650 - playAgainButton.height/2);
   }
 
   if (state10Active) {
@@ -311,10 +315,11 @@ button1Pressed = function() {
   if (state12Active) {
     // Move to ending state
     adventureManager.changeState('State14', null);
-    // Deactivate buttons
-    button1.image = null;
-    button1.width = null;
-    button1.height = null;
+    // Play again button takes you back to the first scenario
+    button1.image = playAgainButton;
+    button1.width = playAgainButton.width;
+    button1.height = playAgainButton.height;
+    button1.locate(985 - playAgainButton.width/2, 650 - playAgainButton.height/2);
   }
 
   if (state7Active) {
@@ -335,10 +340,91 @@ button1Pressed = function() {
   if (state15Active) {
     // Move to ending state
     adventureManager.changeState('State17', null);
-    // Deactivate buttons
-    button1.image = null;
-    button1.width = null;
-    button1.height = null;
+    // Play again button takes you back to the first scenario
+    button1.image = playAgainButton;
+    button1.width = playAgainButton.width;
+    button1.height = playAgainButton.height;
+    button1.locate(985 - playAgainButton.width/2, 650 - playAgainButton.height/2);
+  }
+
+  if (state11Active) {
+    secondPlay = true;
+    // Go back to state 5
+    adventureManager.changeState('State5', null);
+    // Reset buttons
+    button1.image = subscriptionButton;
+    button1.width = subscriptionButton.width;
+    button1.height = subscriptionButton.height;
+    button1.locate(975 - subscriptionButton.width/2, 647 - subscriptionButton.height/2);
+
+    option2.image = overCounterButton;
+    option2.width = overCounterButton.width;
+    option2.height = overCounterButton.height;
+    option2.locate(320 - option2.width/2, 650 - option2.height/2);
+  }
+
+  if (state13Active) {
+    secondPlay = true;
+    // Go back to state 5
+    adventureManager.changeState('State5', null);
+    // Reset buttons
+    button1.image = subscriptionButton;
+    button1.width = subscriptionButton.width;
+    button1.height = subscriptionButton.height;
+    button1.locate(975 - subscriptionButton.width/2, 647 - subscriptionButton.height/2);
+
+    option2.image = overCounterButton;
+    option2.width = overCounterButton.width;
+    option2.height = overCounterButton.height;
+    option2.locate(320 - option2.width/2, 650 - option2.height/2);
+  }
+
+  if (state14Active) {
+    secondPlay = true;
+    // Go back to state 5
+    adventureManager.changeState('State5', null);
+    // Reset buttons
+    button1.image = subscriptionButton;
+    button1.width = subscriptionButton.width;
+    button1.height = subscriptionButton.height;
+    button1.locate(975 - subscriptionButton.width/2, 647 - subscriptionButton.height/2);
+
+    option2.image = overCounterButton;
+    option2.width = overCounterButton.width;
+    option2.height = overCounterButton.height;
+    option2.locate(320 - option2.width/2, 650 - option2.height/2);
+  }
+
+  if (state16Active) {
+    secondPlay = true;
+    // Go back to state 5
+    adventureManager.changeState('State5', null);
+    // Reset buttons
+    button1.image = subscriptionButton;
+    button1.width = subscriptionButton.width;
+    button1.height = subscriptionButton.height;
+    button1.locate(975 - subscriptionButton.width/2, 647 - subscriptionButton.height/2);
+
+    option2.image = overCounterButton;
+    option2.width = overCounterButton.width;
+    option2.height = overCounterButton.height;
+    option2.locate(320 - option2.width/2, 650 - option2.height/2);
+  }
+
+  if (state17Active) {
+    secondPlay = true;
+    // Go back to state 5
+    adventureManager.changeState('State5', null);
+    // Reset buttons
+    button1.image = subscriptionButton;
+    button1.width = subscriptionButton.width;
+    button1.height = subscriptionButton.height;
+    button1.locate(975 - subscriptionButton.width/2, 647 - subscriptionButton.height/2);
+
+    option2.image = overCounterButton;
+    option2.width = overCounterButton.width;
+    option2.height = overCounterButton.height;
+    option2.locate(320 - option2.width/2, 650 - option2.height/2);
   }
 }
 
@@ -375,6 +461,11 @@ button1Hover = function() {
   if (button1.image === plansSameButton) {
     button1.image = plansSameButtonWhite;
   }
+
+  if (button1.image === playAgainButton) {
+    button1.image = playAgainButtonWhite;
+  }
+
 }
 
 button1Outside = function() {
@@ -434,6 +525,13 @@ button1Outside = function() {
   else if (button1.image === plansSameButtonWhite) {
     button1.image = plansSameButton;
   }
+
+  if (button1.image === playAgainButton) {
+    button1.image = playAgainButton;
+  }
+  else if (button1.image === playAgainButtonWhite) {
+    button1.image = playAgainButton;
+  }
 }
 
 option2Pressed = function() {
@@ -462,19 +560,21 @@ option2Pressed = function() {
   if (state12Active) {
     // Move to ending state
     adventureManager.changeState('State13', null);
-    // Deactivate buttons
-    button1.image = null;
-    button1.width = null;
-    button1.height = null;
+    // Play again button takes you back to the first scenario
+    button1.image = playAgainButton;
+    button1.width = playAgainButton.width;
+    button1.height = playAgainButton.height;
+    button1.locate(985 - playAgainButton.width/2, 650 - playAgainButton.height/2);
   }
 
   if (state15Active) {
     // Move to ending state
     adventureManager.changeState('State16', null);
-    // Deactivate buttons
-    button1.image = null;
-    button1.width = null;
-    button1.height = null;
+    // Play again button takes you back to the first scenario
+    button1.image = playAgainButton;
+    button1.width = playAgainButton.width;
+    button1.height = playAgainButton.height;
+    button1.locate(985 - playAgainButton.width/2, 650 - playAgainButton.height/2);
   }
 }
 
@@ -588,6 +688,22 @@ class State5Room extends PNGRoom {
     super.draw();
     state4Active = false;
     state5Active = true;
+
+    // If this is the second play disable all the ending rooms
+    if (secondPlay) {
+      state6Active = false;
+      state7Active = false;
+      state8Active = false;
+      state9Active = false;
+      state10Active = false;
+      state11Active = false;
+      state12Active = false;
+      state13Active = false;
+      state14Active = false;
+      state15Active = false;
+      state16Active = false;
+      state17Active = false;
+    }
 
     // This is a scenario decision room, so we draw the second option
     option2.draw();
